@@ -29,6 +29,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->delete('/users/{id}', 'UserController@destroy');
 
         // Endpoint Transaksi
+        // Endpoint normal /api/transactions
+        // Endpoint filter /api/transactions?category=makanan
+        // Endpoint filter /api/transactions?category=makanan&per_page=5
         $router->get('/transactions', 'TransactionController@index');
         $router->get('/transactions/{id}', 'TransactionController@show');
         $router->post('/transactions', 'TransactionController@store');
@@ -41,7 +44,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->put('/categories/{id}', 'CategoryController@update');
         $router->delete('/categories/{id}', 'CategoryController@destroy');
 
-        // Endpoint Statistik keuangan
+        // Endpoint Statistik keuangan  /api/statistics?user_id=1&start_date=2022-01-01&end_date=2022-12-31
         $router->get('/statistics', 'StatisticController@index');
     });
 });
