@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->decimal('amount', 10, 2);
-            $table->string('category');
+            $table->string('category_id')->nullable();
             $table->string('description')->nullable();
             $table->date('date');
             $table->timestamps();

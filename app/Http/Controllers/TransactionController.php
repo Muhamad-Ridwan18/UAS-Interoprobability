@@ -14,15 +14,15 @@ class TransactionController extends Controller
      */
     public function __construct()
     {
-        //
+        $this->middleware('auth');
     }
 
     public function index(Request $request)
     {
         $query = Transaction::query();
 
-        if ($request->has('category')) {
-            $query->where('category', $request->input('category'));
+        if ($request->has('category_id')) {
+            $query->where('category_id', $request->input('category_id'));
         }
 
         $transactions = $query->paginate(10);
@@ -41,7 +41,7 @@ class TransactionController extends Controller
         $this->validate($request, [
             'user_id' => 'required|exists:users,id',
             'amount' => 'required|numeric',
-            'category' => 'required|string',
+            'category_id' => 'required|string',
             'description' => 'nullable|string',
             'date' => 'required|date',
         ]);
@@ -55,7 +55,7 @@ class TransactionController extends Controller
         $this->validate($request, [
             'user_id' => 'exists:users,id',
             'amount' => 'numeric',
-            'category' => 'string',
+            'category_id' => 'string',
             'description' => 'nullable|string',
             'date' => 'date',
         ]);
