@@ -7,6 +7,46 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+
+    public function index()
+    {
+        $users = User::latest()->paginate(10);
+        return response()->json($users);
+    }
+
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+        return response()->json($user);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'name' => 'nullable|string',
+            'email' => 'nullable|email|unique:users,email',
+            'password' => 'nullable|min:6'
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+
+        return response()->json([
+            'message' => 'User update successfully',
+            'data' => $user
+        ], 201);
+    }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return response()->json([
+            'message' => 'User deleted successfully',
+        ], 201);
+    }
+
   public function register(Request $request)
   {
       $this->validate($request, [
@@ -58,5 +98,7 @@ class UserController extends Controller
 
       return response()->json($user);
   }
+
+
 
 } 
